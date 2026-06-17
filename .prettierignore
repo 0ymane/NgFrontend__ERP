@@ -1,0 +1,17 @@
+# Ignore Angular config and environment files
+.editorconfig
+.gitignore
+
+# Ignore assets and binaries
+public/favicon.ico
+*.ico
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+
+# Ignore build and cache folders (good practice)
+dist/
+.angular/
+node_modules/

@@ -1,3 +1,5 @@
+@layer theme, base, primeng, components, utilities;
+
 @import "tailwindcss";
 
 /* ============================================================================

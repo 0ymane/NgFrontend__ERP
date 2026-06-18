@@ -2,7 +2,8 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessC
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
-import Nora from '@primeuix/themes/nora';
+import { AcssPreset } from '../primeng-acss-preset';
+import Aura from '@primeuix/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -11,11 +12,17 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     providePrimeNG({
       theme: {
-        preset: Nora,
+        preset: AcssPreset,
         options: {
-          darkModeSelector: false
-        }
-      }
-    })
+          darkModeSelector: '.app-dark',
+          cssLayer: {
+            name: 'primeng',
+            order: 'theme, base, primeng, components, utilities'
+          },
+          prefix: 'p',
+        },
+      },
+      ripple: true,
+    }),
   ]
 };

@@ -1,0 +1,149 @@
+<!-- Added min-h-screen and bg-cover to the main container -->
+<div
+    class="flex items-center justify-center min-h-screen bg-[url(https://keenthemes.com/metronic/tailwind/dist/assets/media/images/2600x1200/bg-10-dark.png)] bg-no-repeat bg-center bg-cover text-white">
+
+    <div
+        class="w-full max-w-sm bg-[oklch(0.141_0.005_285.823)] border border-[oklch(0.274_0.006_286.033)] rounded-xl shadow-sm flex flex-col">
+
+
+        <form (submit)="onSubmit($event)" novalidate class="flex flex-col gap-5 p-10">
+
+
+            <!-- Header -->
+            <div class="text-center space-y-2">
+                <h3 class="text-lg font-medium text-zinc-200">
+                    Sign Up
+                </h3>
+                <div class="flex items-center justify-center text-sm font-medium">
+                    <span class="mr-1">Already have an Account ?</span>
+                    <a routerLink="/sign-in" class="btn hover:underline">Sign in</a>
+                </div>
+            </div>
+
+            <!-- Social Buttons -->
+            <div class="grid grid-cols-2 gap-2.5">
+                <a href="#"
+                    class="btn flex items-center justify-center gap-1.5 h-8 px-3 text-xs font-medium rounded-md border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 transition">
+                    <img src="https://keenthemes.com/metronic/tailwind/dist/assets/media/brand-logos/google.svg"
+                        class="w-3.5 h-3.5" alt="">
+                    Use Google
+                </a>
+
+                <a href="#"
+                    class="btn flex items-center justify-center gap-1.5 h-8 px-3 text-xs font-medium rounded-md border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 transition">
+                    <img src="https://keenthemes.com/metronic/tailwind/dist/assets/media/brand-logos/apple-white.svg"
+                        class="w-3.5 h-3.5" alt="">
+                    Use Apple
+                </a>
+            </div>
+
+            <!-- Divider -->
+            <div class="flex items-center gap-2">
+                <div class="flex-1 border-t border-zinc-700"></div>
+                <span class="text-xs uppercase text-zinc-400 font-medium">Or</span>
+                <div class="flex-1 border-t border-zinc-700"></div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+                @let email = signUpForm.email();
+                <label class="text-sm font-medium text-[oklch(0.871_0.006_286.286)]">Email</label>
+
+                <input type="email" autocomplete="email" placeholder="email@email.com" [formField]="signUpForm.email"
+                    class="selection:bg-[oklch(0.546_0.245_262.881)] selection:text-white h-8 px-3 text-xs text-white rounded-md border border-[oklch(0.274_0.006_286.033)]
+                            bg-[oklch(0.141_0.005_285.823)] focus:outline-none focus:ring-2
+                            focus:ring-[oklch(0.546_0.245_262.881)] transition"
+                    [class.border-red-500]="email.touched() && email.invalid()"
+                    [class.focus:ring-red-500]="email.touched() && email.invalid()"
+                    [class.border-[oklch(0.274_0.006_286.033)]]="!(email.touched() && email.invalid())"
+                    [class.focus:ring-[oklch(0.546_0.245_262.881)]]="!(email.touched() && email.invalid())" />
+                @if (email.touched() && email.invalid()) {
+                <div class="flex flex-col gap-0.5 mt-1 text-red-400 text-xs">
+                    @for (err of email.errors(); track $index) {
+                    <span>{{ err.message }}</span>
+                    }
+                </div>
+                }
+            </div>
+
+            <div class="flex flex-col gap-1">
+                @let password = signUpForm.password();
+                <label class="text-sm font-medium text-[oklch(0.871_0.006_286.286)]">Password</label>
+                <div class="relative flex items-center w-full">
+                    <input [formField]="signUpForm.password" autocomplete="new-password"
+                        [type]="showPassword() ? 'text' : 'password'" placeholder="Enter Password" class="h-8 px-3 text-xs text-white rounded-md border border-[oklch(0.274_0.006_286.033)]
+                            bg-[oklch(0.141_0.005_285.823)] focus:outline-none focus:ring-2
+                            focus:ring-[oklch(0.546_0.245_262.881)] transition"
+                        [class.border-red-500]="password.touched() && password.invalid()"
+                        [class.focus:ring-red-500]="password.touched() && password.invalid()"
+                        [class.border-[oklch(0.274_0.006_286.033)]]="!(password.touched() && password.invalid())"
+                        [class.focus:ring-[oklch(0.546_0.245_262.881)]]="!(password.touched() && password.invalid())" />
+
+                    <button type="button" (click)="togglePassword()"
+                        class="absolute right-2.5 text-zinc-400 hover:text-white transition cursor-pointer flex items-center justify-center">
+                        @if (showPassword()) {
+                        <i class="ki-filled ki-eye-slash text-sm"></i>
+                        } @else {
+                        <i class="ki-filled ki-eye text-sm"></i>
+                        }
+                    </button>
+                </div>
+
+                @if (password.touched() && password.invalid()) {
+                <div class="flex flex-col gap-0.5 mt-1 text-red-400 text-xs">
+                    @for (err of password.errors(); track $index) {
+                    <span>{{ err.message }}</span>
+                    }
+                </div>
+                }
+
+            </div>
+
+            <div class="flex flex-col gap-1">
+                @let confirm = signUpForm.confirmPassword();
+                <label class="text-sm font-medium text-[oklch(0.871_0.006_286.286)]">Confirm Password</label>
+                <div class="relative flex items-center w-full">
+                    <input [formField]="signUpForm.confirmPassword" autocomplete="new-password"
+                        [type]="showConfirmPassword() ? 'text' : 'password'" placeholder="Re-enter Password" class="h-8 px-3 text-xs text-white rounded-md border border-[oklch(0.274_0.006_286.033)]
+                            bg-[oklch(0.141_0.005_285.823)] focus:outline-none focus:ring-2
+                            focus:ring-[oklch(0.546_0.245_262.881)] transition"
+                        [class.border-red-500]="confirm.touched() && confirm.invalid()"
+                        [class.focus:ring-red-500]="confirm.touched() && confirm.invalid()"
+                        [class.border-[oklch(0.274_0.006_286.033)]]="!(confirm.touched() && confirm.invalid())"
+                        [class.focus:ring-[oklch(0.546_0.245_262.881)]]="!(confirm.touched() && confirm.invalid())" />
+
+                    <button type="button" (click)="toggleConfirmPassword()"
+                        class="absolute right-2.5 text-zinc-400 hover:text-white transition cursor-pointer flex items-center justify-center">
+                        @if (showConfirmPassword()) {
+                        <i class="ki-filled ki-eye-slash text-sm"></i>
+                        } @else {
+                        <i class="ki-filled ki-eye text-sm"></i>
+                        }
+                    </button>
+                </div>
+
+                @if (confirm.touched() && confirm.invalid()) {
+                <div class="flex flex-col gap-0.5 mt-1 text-red-400 text-xs">
+                    @for (err of confirm.errors(); track $index) {
+                    <span>{{ err.message }}</span>
+                    }
+                </div>
+                }
+
+            </div>
+
+            <button type="submit" [disabled]="signUpForm().submitting()" class="flex items-center justify-center gap-2 h-8 min-w-[120px] px-3 text-xs font-medium rounded-md bg-[oklch(0.546_0.245_262.881)] text-white transition shadow-sm
+           hover:opacity-90
+           disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:opacity-60">
+
+                @if (signUpForm().submitting()) {
+                <i class="ki-outline ki-loading animate-spin text-sm"></i>
+                <span>Submitting...</span>
+                } @else {
+                <span>Sign up</span>
+                }
+
+            </button>
+        </form>
+
+    </div>
+</div>

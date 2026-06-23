@@ -1,0 +1,52 @@
+<header class="flex items-center z-50 w-full bg-[oklch(0.141_0.005_285.823)] h-14">
+    <nav
+        class="w-full max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-row items-center justify-between flex-nowrap gap-4">
+
+        <div class="flex items-center shrink-0">
+            <a class="text-foreground-inverse focus:outline-hidden focus:opacity-80 flex items-center" routerLink="/"
+                aria-label="Brand">
+                <img ngSrc="/logo.svg" alt="Logo" width="62" height="40" class="h-9 w-auto object-contain"
+                    priority="true" />
+            </a>
+        </div>
+
+        <div class="flex items-center flex-nowrap shrink-0 gap-1.5 sm:gap-2">
+
+            @if (isSignInRoute()) {
+            <a routerLink="/sign-up" class="
+                    flex items-center justify-center shrink-0
+                    h-8 px-3 gap-1.5
+                    text-xs font-medium text-white leading-[1.3333]
+                    whitespace-nowrap no-underline
+                    bg-linear-to-b from-[lab(15.7305_0.613764_-2.16959)] to-[lab(2.51107_0.242703_-0.886115)]
+                    border border-[0.8px] border-[lab(2.51107_0.242703_-0.886115)]
+                    rounded-lg
+                    shadow-[inset_0_0_0_1px_oklab(0.999994_0.0000455678_0.0000200868/0.2),0_4px_6px_-1px_oklab(0.141_0.00136173_-0.00480696/0.3),0_2px_4px_-2px_oklab(0.141_0.00136173_-0.00480696/0.3)]
+                    cursor-pointer
+                    transition-[filter] duration-200 ease-in-out
+                    hover:brightness-110
+                ">
+                Sign up
+            </a>
+            } @else {
+            <a routerLink="/sign-in" class="
+                flex items-center justify-center shrink-0
+                h-8 px-3 gap-1.5
+                text-xs font-medium text-white leading-[1.3333]
+                whitespace-nowrap no-underline
+                bg-linear-to-b from-[lab(15.7305_0.613764_-2.16959)] to-[lab(2.51107_0.242703_-0.886115)]
+                border border-[0.8px] border-[lab(2.51107_0.242703_-0.886115)]
+                rounded-lg
+                shadow-[inset_0_0_0_1px_oklab(0.999994_0.0000455678_0.0000200868/0.2),0_4px_6px_-1px_oklab(0.141_0.00136173_-0.00480696/0.3),0_2px_4px_-2px_oklab(0.141_0.00136173_-0.00480696/0.3)]
+                cursor-pointer
+                transition-[filter] duration-200 ease-in-out
+                hover:brightness-110
+            ">
+                Sign in
+            </a>
+            }
+
+        </div>
+    </nav>
+</header>
+<router-outlet></router-outlet>

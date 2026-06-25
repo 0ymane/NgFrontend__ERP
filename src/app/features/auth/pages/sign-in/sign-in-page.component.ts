@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { form, validateStandardSchema, FormField } from '@angular/forms/signals';
-import {signInSchema} from '@core/forms/auth.schema'
+import {signInSchema, SignInForm} from '@core/forms/auth.schema'
 
 @Component({
   selector: 'sign-in-page',
@@ -13,7 +13,7 @@ export class SignInPageComponent {
   showPassword = signal(false);
   isSubmitting = signal(false);
 
-  private signInModel = signal({
+  private signInModel  = signal<SignInForm>({
     email: '',
     password: ''
   });

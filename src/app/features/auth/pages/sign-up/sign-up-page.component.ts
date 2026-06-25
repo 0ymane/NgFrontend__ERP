@@ -2,7 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { form, validateStandardSchema, submit, FormField } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
-import { signUpSchema } from '@core/forms/auth.schema';
+import { signUpSchema, SignUpForm } from '@core/forms/auth.schema';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { signUpSchema } from '@core/forms/auth.schema';
 
 
 export class SignUpPageComponent {
-  protected model = signal({
+  protected model = signal<SignUpForm>({
     email: '',
     password: '',
     confirmPassword: ''

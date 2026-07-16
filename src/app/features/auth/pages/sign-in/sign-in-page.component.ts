@@ -1,19 +1,20 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { form, validateStandardSchema, FormField } from '@angular/forms/signals';
-import {signInSchema, SignInForm} from '@core/forms/auth.schema'
+import { form, validateStandardSchema, submit, FormField } from '@angular/forms/signals';
+import { signInSchema, SignInForm } from '@core/forms/auth.schema';
+import { AuthStore } from '@features/auth/auth.store';
 
 @Component({
   selector: 'sign-in-page',
   imports: [RouterLink, FormField],
   templateUrl: './sign-in-page.component.html',
 })
-
 export class SignInPageComponent {
-  showPassword = signal(false);
-  isSubmitting = signal(false);
+  protected authStore = inject(AuthStore);
 
-  private signInModel  = signal<SignInForm>({
+  showPassword = signal(false);
+
+  private signInModel = signal<SignInForm>({
     email: '',
     password: ''
   });
@@ -22,42 +23,35 @@ export class SignInPageComponent {
     validateStandardSchema(scope, signInSchema);
   });
 
+  constructor() {
+    this.authStore.clearError();
+  }
+
   togglePassword() {
     this.showPassword.update(show => !show);
   }
 
-  protected async onSubmit(event: SubmitEvent) {
+  protected onSubmit(event: SubmitEvent) {
     event.preventDefault();
 
     const state = this.signInForm();
     if (!state.valid) return;
 
-    this.isSubmitting.set(true);
-
-    try {
-      const payload = this.signInModel();
-
-    //   await new Promise(resolve => setTimeout(resolve, 1500));
-
-      console.log('Sign in successful!', payload);
-
-
-      this.signInModel.set({
-        email: '',
-        password: ''
-      });
-
-      this.signInForm().reset();
-
-
-    } catch (httpError: any) {
-
-      console.error('Sign in failed:', httpError);
-
-    } finally {
-
-      this.isSubmitting.set(false);
-
-    }
+    submit(this.signInForm, {
+      action: async () => {
+        try {
+          const payload = this.signInForm().value();
+          await this.authStore.login(payload);
+          this.signInModel.set({
+            email: '',
+            password: ''
+          });
+          this.signInForm().reset();
+        } catch (err) {
+          // Error is captured and exposed via AuthStore.error signal
+          console.error('Sign in failed:', err);
+        }
+      }
+    });
   }
 }

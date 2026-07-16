@@ -20,6 +20,15 @@
                 </div>
             </div>
 
+            <!-- API Error Alert -->
+            @if (authStore.error(); as apiError) {
+            <div class="p-3 text-xs text-red-400 bg-red-950/40 border border-red-900/50 rounded-md">
+                {{ apiError.message || 'Registration failed. Please check the fields and try again.' }}
+            </div>
+            }
+
+
+
             <!-- Social Buttons -->
             <div class="grid grid-cols-2 gap-2.5">
                 <a href="#"
@@ -42,6 +51,27 @@
                 <div class="flex-1 border-t border-zinc-700"></div>
                 <span class="text-xs uppercase text-zinc-400 font-medium">Or</span>
                 <div class="flex-1 border-t border-zinc-700"></div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+                @let name = signUpForm.name();
+                <label class="text-sm font-medium text-[oklch(0.871_0.006_286.286)]">Name</label>
+
+                <input type="text" autocomplete="name" placeholder="John Doe" [formField]="signUpForm.name"
+                    class="selection:bg-[oklch(0.546_0.245_262.881)] selection:text-white h-8 px-3 text-xs text-white rounded-md border border-[oklch(0.274_0.006_286.033)]
+                            bg-[oklch(0.141_0.005_285.823)] focus:outline-none focus:ring-2
+                            focus:ring-[oklch(0.546_0.245_262.881)] transition"
+                    [class.border-red-500]="name.touched() && name.invalid()"
+                    [class.focus:ring-red-500]="name.touched() && name.invalid()"
+                    [class.border-[oklch(0.274_0.006_286.033)]]="!(name.touched() && name.invalid())"
+                    [class.focus:ring-[oklch(0.546_0.245_262.881)]]="!(name.touched() && name.invalid())" />
+                @if (name.touched() && name.invalid()) {
+                <div class="flex flex-col gap-0.5 mt-1 text-red-400 text-xs">
+                    @for (err of name.errors(); track $index) {
+                    <span>{{ err.message }}</span>
+                    }
+                </div>
+                }
             </div>
 
             <div class="flex flex-col gap-1">
